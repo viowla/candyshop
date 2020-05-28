@@ -1,0 +1,33 @@
+Candy shop
+
+The theme of my project is shop.
+
+Programming language - Java Spring framework
+
+Short description:
+-Confectionery application where a customer can place an order for a dessert. After ordering, the system
+calculates the total cost of the order
+
+MVC Java Spring template was used
+
+Models:
+-User
+-Order
+-Role
+-Desserts
+
+Controllers:
+-users(repository+controller)
+-roles(repository+controller)
+-desserts(repository+controller)
+-order(repository+controller)
+
+Configurations:
+-Jwt token config(auth+generate)
+-Security(web security adapter)
+-Spring(Docket api)
+
+Exceptions:
+-No role exception
+-No order exception
+-No user exception
