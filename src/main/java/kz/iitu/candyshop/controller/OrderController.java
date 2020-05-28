@@ -56,6 +56,7 @@ public class OrderController {
             allPrice+=price.getPrice();
         }
         order.setOrderPrice(allPrice);
+
         orderRepository.saveAndFlush(order);
         return "redirect:/";
 
