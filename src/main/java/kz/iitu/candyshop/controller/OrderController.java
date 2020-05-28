@@ -43,16 +43,16 @@ public class OrderController {
         System.out.println(all);
         order.setTime(new Date());
         order.setUsers(user);
-        ArrayList<Dessert> pizzasOrder = new ArrayList<>();
+        ArrayList<Dessert> dessertsOrder = new ArrayList<>();
 
-        for (String pizza : desserts) {
-            Dessert p = dessertRepository.findById(Long.parseLong(pizza)).get();
-            pizzasOrder.add(p);
+        for (String dessert : desserts) {
+            Dessert p = dessertRepository.findById(Long.parseLong(dessert)).get();
+            dessertsOrder.add(p);
         }
-        order.setPizzas(pizzasOrder);
+        order.setDesserts(dessertsOrder);
         int allPrice = 0;
 
-        for(Dessert price:pizzasOrder){
+        for(Dessert price:dessertsOrder){
             allPrice+=price.getPrice();
         }
         order.setOrderPrice(allPrice);

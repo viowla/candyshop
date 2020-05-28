@@ -25,10 +25,10 @@ public class Order {
     private User users;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "orderPizza",
+    @JoinTable(name = "orderDessert",
             joinColumns = {@JoinColumn(name="order_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name="pizza_id", referencedColumnName = "id")})
-    private List<Dessert> pizzas;
+            inverseJoinColumns = {@JoinColumn(name="dessert_id", referencedColumnName = "id")})
+    private List<Dessert> desserts;
 
 
 }
