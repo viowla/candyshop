@@ -16,7 +16,6 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String address;
     private Date time;
     private int orderPrice;
 
