@@ -2,16 +2,22 @@ package kz.iitu.candyshop.controller;
 
 
 import io.swagger.annotations.Api;
+import kz.iitu.candyshop.entity.Role;
 import kz.iitu.candyshop.entity.User;
+import kz.iitu.candyshop.exceptions.NoRoleException;
+import kz.iitu.candyshop.exceptions.UserNotFoundException;
+import kz.iitu.candyshop.repository.RoleRepository;
 import kz.iitu.candyshop.repository.UserRepository;
 import kz.iitu.candyshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/users")
@@ -23,7 +29,13 @@ public class UserController {
     private UserRepository userRepository;
 
     @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
     private UserService userService;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @GetMapping("")
     public List<User> getAllUsers(){
@@ -53,6 +65,21 @@ public class UserController {
         userRepository.deleteById(id);
     }
 
+    @GetMapping("/{id}")
+    public User findUserById(@PathVariable Long id) throws UserNotFoundException {
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null){
+            throw new UserNotFoundException();
+        }
+        return user;
+    }
 
-
+    @PostMapping("")
+    public String createUser(User user, Map<String, Object> model) throws NoRoleException {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        Role userRole = roleRepository.findById((long) 2).get();
+        user.addUserRole(userRole);
+        userService.createUser(user);
+        return "redirect:/login";
+    }
 }

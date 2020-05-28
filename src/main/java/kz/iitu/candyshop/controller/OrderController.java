@@ -4,12 +4,14 @@ import io.swagger.annotations.Api;
 import kz.iitu.candyshop.entity.Dessert;
 import kz.iitu.candyshop.entity.Order;
 import kz.iitu.candyshop.entity.User;
+import kz.iitu.candyshop.exceptions.OrderNotFoundException;
 import kz.iitu.candyshop.repository.DessertRepository;
 import kz.iitu.candyshop.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -34,6 +36,14 @@ public class OrderController {
         List<Order> orders = orderRepository.findAllByUsers(user);
         model.put("orders", orders);
         return "order";
+    }
+
+    @GetMapping("/{id}")
+    public Order getOrderById(@PathVariable Long id) throws OrderNotFoundException{
+        Order order =  orderRepository.findById(id).get();
+        if(order==null)
+            throw new OrderNotFoundException();
+        return order;
     }
 
     @PostMapping("/create")
