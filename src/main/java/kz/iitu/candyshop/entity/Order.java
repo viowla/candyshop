@@ -25,7 +25,7 @@ public class Order {
     private User users;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "orderDessert",
+    @JoinTable(name = "order_dessert",
             joinColumns = {@JoinColumn(name="order_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name="dessert_id", referencedColumnName = "id")})
     private List<Dessert> desserts;
